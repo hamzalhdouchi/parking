@@ -28,6 +28,7 @@ class ParkingController extends Controller
    
 
         /**
+     * 
      * @OA\Post(
      * path="/api/parkings",
      * summary="Ajouter un parking",
