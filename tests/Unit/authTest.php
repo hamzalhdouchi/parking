@@ -9,6 +9,7 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
+    
     public function tearDown(): void
     {
         Mockery::close();
