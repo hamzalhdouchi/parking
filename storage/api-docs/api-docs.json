@@ -1,0 +1,609 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Parking API",
+        "description": "Documentation de l'API de gestion des parkings",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/parkings": {
+            "get": {
+                "tags": [
+                    "Parkings"
+                ],
+                "summary": "Lister tous les parkings",
+                "operationId": "906b203d7aa2fe58b5c3c0a767f95b8d",
+                "responses": {
+                    "200": {
+                        "description": "Liste des parkings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Parking"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Parkings"
+                ],
+                "summary": "Ajouter un parking",
+                "operationId": "e695faaf3f2d6470ac8c87f62b5221c1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "location",
+                                    "total_spaces"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Parking Central"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Paris, France"
+                                    },
+                                    "total_spaces": {
+                                        "type": "integer",
+                                        "example": 100
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Parking ajouté avec succès"
+                    },
+                    "400": {
+                        "description": "Données invalides"
+                    }
+                }
+            }
+        },
+        "/api/parkings/{id}": {
+            "get": {
+                "tags": [
+                    "Parkings"
+                ],
+                "summary": "Obtenir les détails d'un parking",
+                "operationId": "e52a76d93475b17397e56b9c3a9a1507",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du parking",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails du parking"
+                    },
+                    "404": {
+                        "description": "Parking non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Parkings"
+                ],
+                "summary": "Mettre à jour un parking",
+                "operationId": "1d51b081ba742017d7d1401ef3984091",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du parking",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "location",
+                                    "total_spaces"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Parking Central"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Paris, France"
+                                    },
+                                    "total_spaces": {
+                                        "type": "integer",
+                                        "example": 120
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Parking mis à jour"
+                    },
+                    "404": {
+                        "description": "Parking non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Parkings"
+                ],
+                "summary": "Supprimer un parking",
+                "operationId": "c9a41b7816141be701626d0e88a0d614",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du parking",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Parking supprimé"
+                    },
+                    "404": {
+                        "description": "Parking non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/parkings/search": {
+            "get": {
+                "tags": [
+                    "Parkings"
+                ],
+                "summary": "Rechercher un parking par emplacement",
+                "operationId": "65a84f139d47b1e9394733f4ea6d8498",
+                "parameters": [
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Emplacement recherché",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des parkings trouvés"
+                    },
+                    "404": {
+                        "description": "Aucun parking trouvé"
+                    }
+                }
+            }
+        },
+        "/api/parkings/stats": {
+            "get": {
+                "tags": [
+                    "Parkings"
+                ],
+                "summary": "Obtenir les statistiques des parkings",
+                "operationId": "58c8b8f46ac1aca5e15e04a618e481f6",
+                "responses": {
+                    "200": {
+                        "description": "Statistiques des parkings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_parkings": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "total_places": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "reservations_en_cours": {
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "taux_occupation": {
+                                            "type": "string",
+                                            "example": "10%"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reservations": {
+            "get": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Récupérer les réservations",
+                "operationId": "69fb15b9890a0559eb50e5e1777d9b64",
+                "responses": {
+                    "200": {
+                        "description": "Liste des réservations"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Créer une réservation",
+                "operationId": "c1383379081406847e27382421848af7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "parking_id",
+                                    "heurs_arrivée",
+                                    "heurs_départ"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "parking_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "heurs_arrivée": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-15T08:00:00Z"
+                                    },
+                                    "heurs_départ": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-15T10:00:00Z"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Réservation créée"
+                    },
+                    "400": {
+                        "description": "Conflit avec une autre réservation"
+                    }
+                }
+            }
+        },
+        "/reservations/{id}": {
+            "put": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Modifier une réservation",
+                "operationId": "3cb121a7272b76103c947578223bb7d5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "heurs_arrivée": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "heurs_départ": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Réservation mise à jour"
+                    },
+                    "400": {
+                        "description": "Conflit avec une autre réservation"
+                    },
+                    "404": {
+                        "description": "Réservation non trouvée"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Reservations"
+                ],
+                "summary": "Supprimer une réservation",
+                "operationId": "fa964cce3285d6c10989429c544421ca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Réservation supprimée"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Réservation non trouvée"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user",
+                "description": "Register a new user with name, email, and password",
+                "operationId": "register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "securepassword123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The user was created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user",
+                "description": "Login a user with email and password",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "securepassword123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User logged in successfully"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "your-jwt-token-here"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Incorrect credentials"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout user",
+                "description": "Logout the current user by revoking their token",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logout successful"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Parking": {
+                "title": "Parking",
+                "description": "Modèle d'un parking",
+                "required": [
+                    "name",
+                    "location",
+                    "total_spaces"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Parking Central"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "Paris, France"
+                    },
+                    "total_spaces": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-13T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-13T12:30:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Parkings",
+            "description": "Opérations liées aux parkings"
+        },
+        {
+            "name": "Reservations",
+            "description": "Reservations"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ]
+}
