@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Reservation;
 
     /**
+     * 
      * @OA\Schema(
      *     schema="Parking",
      *     title="Parking",
