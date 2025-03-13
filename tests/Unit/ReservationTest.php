@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class ReservationTest extends TestCase
 {
+    
     public function tearDown(): void
     {
         Mockery::close();
