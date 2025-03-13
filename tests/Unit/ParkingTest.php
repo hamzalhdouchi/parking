@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class ParkingTest extends TestCase
 {
+    
     public function tearDown(): void
     {
         Mockery::close();
