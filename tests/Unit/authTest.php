@@ -49,7 +49,7 @@ class AuthTest extends TestCase
         $this->assertTrue(Hash::check('hamza123', $user->password));
     }
 
-    public function testLogout()
+        public function testLogout()
     {
         $mockUser = Mockery::mock('alias:' . User::class);
         $mockUser->shouldReceive('revoke')->once()->andReturn(true);

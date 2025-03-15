@@ -196,7 +196,6 @@ class ParkingController extends Controller
             $request->validated();
 
             $location = $request->location;
-
             $parkings = Parking::where('location', 'LIKE', "%{$location}%")
                 ->withCount(['reservation as espace_ouccepe' => function ($query) {
                     $query->where('heurs_départ', '>=', now()); 
@@ -235,13 +234,10 @@ class ParkingController extends Controller
             {
                 $totalParkings = Parking::count(); 
                 $totalPlaces = Parking::sum('total_spaces'); 
-                $reservationsEnCours = DB::table('reservations')
-                    ->where('heurs_départ', '>=', now())
-                    ->count(); 
+                $reservationsEnCours = DB::table('reservations')->where('heurs_départ', '>=', now())->count(); 
 
-                $tauxOccupation = $totalPlaces > 0 
-                    ? round(($reservationsEnCours / $totalPlaces) * 100, 2)
-                    : 0;
+                $tauxOccupation =  round(($reservationsEnCours / $totalPlaces) * 100, 2);
+    
 
                 return response()->json([
                     'total_parkings' => $totalParkings,

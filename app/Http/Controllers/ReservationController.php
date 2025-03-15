@@ -160,13 +160,7 @@ class ReservationController extends Controller
             if (!$reservation) {
                 return response()->json(['message' => 'Cette réservation n existe pas.'], 404);
             }
-
-            if ($reservation->user_id !== Auth::id()) {
-                return response()->json(['message' => 'Vous n avez pas l autorisation d annuler cette reservation.'], 403);
-            }
-
             $reservation->delete();
-
             return response()->json(['message' => 'Reservation annulée avec succes.'], 200);
         }
 
@@ -178,9 +172,9 @@ class ReservationController extends Controller
          * @OA\Response(response=200, description="Liste des réservations")
          * )
          */
-        public function index()
+        public function index($id)
         {
-            $userId = 5; 
+            $userId = $id; 
         
             $reservationsActuele = Reservation::where('user_id', $userId)
                 ->where('heurs_départ', '>=', now()) 
